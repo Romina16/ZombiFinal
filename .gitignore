@@ -1,0 +1,20 @@
+# Archivos y carpetas generados automáticamente (NO deben subirse a Git)
+
+# 1. Configuraciones del IDE (Eclipse)
+.metadata/
+*.settings
+
+# 2. Archivos binarios y carpetas de salida
+/bin/
+/target/
+*.class
+
+# 3. Archivos de proyecto de otros IDEs (por si acaso)
+.classpath
+.project
+*.iml
+.idea/
+
+# 4. Logs y caches
+*.log
+/temp/
