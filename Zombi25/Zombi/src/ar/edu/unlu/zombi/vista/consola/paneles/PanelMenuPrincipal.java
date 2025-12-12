@@ -42,7 +42,7 @@ public class PanelMenuPrincipal extends JPanel implements IPanel {
 	                    }else{//caso de que hay una partida persistida
 	                        switch (opcion){
 	                            case 1 -> administradorVista.IniciarPartida();
-	                            //case 2 -> administradorVista. continuar
+	                            case 2 -> administradorVista.continuarPartidaPersistida();
 	                            case 0 -> administradorVista.SalirJuego();
 	                            default -> {
 	                                administradorVista.mostrarMensajeError("Opcion invalida. Elegi 1, 2 o 0");

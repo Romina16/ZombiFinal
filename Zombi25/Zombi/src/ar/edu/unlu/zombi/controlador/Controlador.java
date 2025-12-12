@@ -47,9 +47,10 @@ public class Controlador implements IControlador, IControladorRemoto{
 			mostrarPanelPartidaPersistida();
 			break;
 		case MOSTRAR_PANTALLA_NOMBRES_JUGADORES_PARTIDA_RECUPERADA:
-			if(this.jugadorAsignado == null) {
+			//if(this.jugadorAsignado == null) {
 				mostrarPanelNombresJugadoresPartidaPersistida();
-			}
+			//}
+			
 			break;
 			///
 		case ERROR_LIMITE_MINIMO_JUGADORES:
@@ -92,7 +93,9 @@ public class Controlador implements IControlador, IControladorRemoto{
 	@Override
 	public int obtenerCantidadMinimaJugadores() {
 		try {
+			
 			return modelo.obtenerCantidadMinimaJugadores();
+			
 		}catch(RemoteException e) {
 			vista.mostrarMensajeError("Error: Remote Exception "+e.getMessage());
 			return -1;
@@ -102,7 +105,9 @@ public class Controlador implements IControlador, IControladorRemoto{
 	@Override
 	public int obtenerCantidadMaximaJugadores() {
 		try {
+			
 			return modelo.obtenerCantidadMaximaJugadores();
+			
 		}catch(RemoteException e) {
 			vista.mostrarMensajeError("Error: Remote Exception "+e.getMessage());
 			return -1;
@@ -308,7 +313,6 @@ public class Controlador implements IControlador, IControladorRemoto{
 				vista.mostrarMensajeError("El indice de la carta elegida no puede ser vacia");
 				return;
 			}
-			
 			int indice = Integer.parseInt(indiceCartaJugadorDerecha.trim());
 			modelo.tomarCartaJugadorDerecha(this, indice);	
 			
@@ -339,9 +343,7 @@ public class Controlador implements IControlador, IControladorRemoto{
 	@Override
 	public void volverAlMenuPrincipal() {
 		try {
-			
 			modelo.finalizarJuego(this);
-			
 		}catch(RemoteException e) {
 			vista.mostrarMensajeError("Error: Remote Exception " + e.getMessage());
 		}
@@ -350,9 +352,7 @@ public class Controlador implements IControlador, IControladorRemoto{
 	@Override
 	public void PersistirPartida() {
 		try {
-			
     		this.modelo.persistirPartida();
-    		
 		} catch(RemoteException e) {
 			vista.mostrarMensajeError("Error: Remote Exception " + e.getMessage());
 		}
@@ -361,9 +361,7 @@ public class Controlador implements IControlador, IControladorRemoto{
 	@Override
 	public void continuarPartidaPersistida() {
 		try {
-			
 			modelo.continuarPartidaPersistida(this);
-			
 		} catch(RemoteException e) {
 			vista.mostrarMensajeError("Error: Remote Exception " + e.getMessage());
 		}
@@ -373,9 +371,7 @@ public class Controlador implements IControlador, IControladorRemoto{
 	@Override
 	public boolean hayPartidaPersistida() {
 		try {
-			
     		return modelo.hayPartidaPersistida();
-    		
 		} catch(RemoteException e) {
 			vista.mostrarMensajeError("Error: Remote Exception " + e.getMessage());
 			return false;
@@ -385,7 +381,6 @@ public class Controlador implements IControlador, IControladorRemoto{
 	@Override
 	public List<JugadorDTO> obtenerJugadoresPartidaPersistida() {
 		try {
-			
     		return modelo.obtenerJugadores()
     				.stream()
     				.map(jugador -> new JugadorDTO(
@@ -407,17 +402,8 @@ public class Controlador implements IControlador, IControladorRemoto{
 				vista.mostrarMensajeError("El identificador no puede estar vacio");
 				return;
 			}			
-						
-			//setJugadorAsignado(id);
-			modelo.reasignarJugadoresPartidaPersistida(this, id);
-			//Mensaje mensaje = modelo.reasignarJugadoresPartidaPersistida(id);
-
-			//EventoGeneral eventoJugador = mensaje.get("EventoJugador", EventoGeneral.class);
-			
-			/*if(eventoJugador == EventoGeneral.MOSTRAR_PANTALLA_ESPERA_JUGADORES) {
-				vista.mostrarPanelEsperaJugadores();
-				return;*/
-	
+			Jugador jugador = modelo.reasignarJugadoresPartidaPersistida(this, id);
+			this.setJugadorAsignado(jugador);
 		} catch(RemoteException e) {
 			vista.mostrarMensajeError("Error: Remote Exception " + e.getMessage());
 		}
@@ -426,6 +412,7 @@ public class Controlador implements IControlador, IControladorRemoto{
 
 	@Override
 	public void mostrarPanelNombresJugadoresPartidaPersistida() {
+		System.out.println("controlador|vista.mostrarPanelNombresJugadoresPartidaPersistida()");
 		vista.mostrarPanelNombresJugadoresPartidaPersistida();
 	}
 

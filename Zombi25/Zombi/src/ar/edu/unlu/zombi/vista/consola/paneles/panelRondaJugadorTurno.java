@@ -61,7 +61,7 @@ public class panelRondaJugadorTurno extends JPanel implements IPanel{
 	
 	
 	private void obtenerPanel() {
-		frame.appendLine("--- TURNO JUGADOR ---");
+		frame.appendLine("--- TURNO JUGADOR --- (Ingrese 0 para pausar la partida)");
 		frame.appendLine("");
 		frame.appendLine("Turno del jugador " + nombreJugadorActual);
 		frame.appendLine("");

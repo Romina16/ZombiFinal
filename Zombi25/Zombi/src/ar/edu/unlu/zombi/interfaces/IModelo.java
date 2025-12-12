@@ -35,6 +35,6 @@ public interface IModelo extends IObservableRemoto {
 	void persistirPartida() throws RemoteException;
 	void continuarPartidaPersistida(IObservadorRemoto observadorRemoto) throws RemoteException;
 	List<Jugador> obtenerJugadoresPartidaPersistida() throws RemoteException;
-	void reasignarJugadoresPartidaPersistida(IObservadorRemoto observadorRemoto, UUID id) throws RemoteException;
+	Jugador reasignarJugadoresPartidaPersistida(IObservadorRemoto observadorRemoto, UUID id) throws RemoteException;
 	
 }

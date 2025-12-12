@@ -35,10 +35,12 @@ public class Modelo extends ObservableRemoto implements IModelo,Serializable{
 	
 	private AdministradorSerializacion administradorSerializacion;
 	private boolean isPartidaRecuperada;
+	private boolean seJugoPartidaPersistida;
 	private List<Jugador> jugadoresAReasignar;
 	
 	//manejar estado del juego
 	private EstadoJuego estadoJuego;
+	
 	
 	public Modelo() {
 		this.jugadores = new ArrayList<Jugador>();
@@ -348,7 +350,7 @@ public class Modelo extends ObservableRemoto implements IModelo,Serializable{
 		this.mazoParejas.clear();
 		this.posicionJugadorActual = 0;
 		this.jugadoresEnEspera = 0;
-		if(hayPartidaPersistida()) {
+		if(seJugoPartidaPersistida) {
 			this.administradorSerializacion.eliminarPartida();
 		}				
 	}
@@ -374,6 +376,7 @@ public class Modelo extends ObservableRemoto implements IModelo,Serializable{
 
 	@Override
 	public void persistirPartida() throws RemoteException {
+		System.out.println("llego a Persistir partida");
 		if(this.administradorSerializacion.persistirPartida(this)) {
 			notificarObservadores(EventoGeneral.PARTIDA_PERSISTIDA);
 		}else {
@@ -403,18 +406,20 @@ public class Modelo extends ObservableRemoto implements IModelo,Serializable{
 		}
 		isPartidaRecuperada = true;
 		
+		seJugoPartidaPersistida = true;
+		
 		if((jugadoresEnEspera++)< cantidadJugadoresActuales) {
 			jugadoresEnEspera++;
 			observadorRemoto.actualizar(null, EventoGeneral.MOSTRAR_PANTALLA_ESPERA_JUGADORES);
 			return;
 		}
 		jugadoresEnEspera = 0;
-		notificarObservadores(EventoGeneral.MOSTRAR_PANTALLA_RONDA_JUGADORES);
-
+		notificarObservadores(EventoGeneral.MOSTRAR_PANTALLA_NOMBRES_JUGADORES_PARTIDA_RECUPERADA);
+		System.out.println("notificarObservadores(EventoGeneral.MOSTRAR_PANTALLA_NOMBRES_JUGADORES_PARTIDA_RECUPERADA");
 	}
 
 	@Override
-	public void reasignarJugadoresPartidaPersistida(IObservadorRemoto observadorRemoto,UUID id) throws RemoteException {
+	public Jugador reasignarJugadoresPartidaPersistida(IObservadorRemoto observadorRemoto,UUID id) throws RemoteException {
 		Jugador jugadorAEliminar = jugadores.stream()
 				.filter(jugador -> jugador.getID().equals(id))
 				.findFirst()
@@ -424,10 +429,11 @@ public class Modelo extends ObservableRemoto implements IModelo,Serializable{
 		
 		if (!jugadoresAReasignar.isEmpty()) {
 			notificarObservadores(EventoGeneral.MOSTRAR_PANTALLA_NOMBRES_JUGADORES_PARTIDA_RECUPERADA);
-			observadorRemoto.actualizar(null, EventoGeneral.MOSTRAR_PANTALLA_CARGA_NOMBRE_JUGADOR);
+			observadorRemoto.actualizar(null, EventoGeneral.MOSTRAR_PANTALLA_ESPERA_JUGADORES);
 		}
 		
 		notificarObservadores(EventoGeneral.MOSTRAR_PANTALLA_RONDA_JUGADORES);
+		return jugadorAEliminar;
 	}
 
 	@Override

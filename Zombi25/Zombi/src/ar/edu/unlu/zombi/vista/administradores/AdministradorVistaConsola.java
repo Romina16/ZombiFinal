@@ -12,13 +12,13 @@ import ar.edu.unlu.zombi.modelo.DTO.CartaDTO;
 import ar.edu.unlu.zombi.modelo.DTO.JugadorDTO;
 import ar.edu.unlu.zombi.vista.consola.JFramePrincipal;
 import ar.edu.unlu.zombi.vista.consola.paneles.PanelMenuPrincipal;
+import ar.edu.unlu.zombi.vista.consola.paneles.PanelNombresJugadoresPartidaPersistida;
 import ar.edu.unlu.zombi.vista.consola.paneles.panelCargaNombreJugador;
 import ar.edu.unlu.zombi.vista.consola.paneles.panelDefinirCantidadJugadores;
 import ar.edu.unlu.zombi.vista.consola.paneles.panelEsperaJugadores;
 import ar.edu.unlu.zombi.vista.consola.paneles.panelFinalRonda;
-import ar.edu.unlu.zombi.vista.consola.paneles.panelNombreJugadoresPartidaPersistida;
 import ar.edu.unlu.zombi.vista.consola.paneles.panelNombresJugadoresCargados;
-import ar.edu.unlu.zombi.vista.consola.paneles.panelPartidaPersistida;
+import ar.edu.unlu.zombi.vista.consola.paneles.PanelPartidaPersistida;
 import ar.edu.unlu.zombi.vista.consola.paneles.panelRondaJugadorObservador;
 import ar.edu.unlu.zombi.vista.consola.paneles.panelRondaJugadorTurno;
 
@@ -35,8 +35,8 @@ public class AdministradorVistaConsola implements IVista {
     private panelRondaJugadorTurno PanelRondaJugadorTurno;
     private panelRondaJugadorObservador PanelRondaJugadorObservador;
     private panelFinalRonda PanelFinalRonda;
-    private panelPartidaPersistida PanelPartidaPersistida;
-    private panelNombreJugadoresPartidaPersistida PanelNombreJugadoresPartidaPersistida;
+    private PanelPartidaPersistida PanelPartidaPersistida;
+    private PanelNombresJugadoresPartidaPersistida PanelNombreJugadoresPartidaPersistida;
 	
     public AdministradorVistaConsola () {
     	this.framePrincipal = new JFramePrincipal();
@@ -49,8 +49,8 @@ public class AdministradorVistaConsola implements IVista {
     	PanelRondaJugadorTurno = new panelRondaJugadorTurno(this,framePrincipal);
     	PanelRondaJugadorObservador = new panelRondaJugadorObservador(this,framePrincipal);
     	PanelFinalRonda = new panelFinalRonda(this,framePrincipal);
-    	PanelPartidaPersistida = new panelPartidaPersistida(this,framePrincipal);
-    	PanelNombreJugadoresPartidaPersistida= new panelNombreJugadoresPartidaPersistida(this,framePrincipal);
+    	PanelPartidaPersistida = new PanelPartidaPersistida(this,framePrincipal);
+    	PanelNombreJugadoresPartidaPersistida= new PanelNombresJugadoresPartidaPersistida(this,framePrincipal);
     	
     	addPanel("Menu Principal",panelMenuPrincipal);
     	addPanel("Definir Cantidad de jugadores",PanelDefinirCantidadJugadores);
@@ -227,6 +227,7 @@ public class AdministradorVistaConsola implements IVista {
 
 	@Override
 	public void mostrarPanelNombresJugadoresPartidaPersistida() {
+		System.out.println("showPanel(\"Nombres Jugadores Partida Persistida\");");
 		showPanel("Nombres Jugadores Partida Persistida");
 	}
 

@@ -1,42 +1,42 @@
 package ar.edu.unlu.zombi.vista.grafica;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import ar.edu.unlu.zombi.interfaces.IPanel;
+//import jdk.internal.org.jline.terminal.TerminalBuilder.SystemOutput;
+
 public class JFramePrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	private final JPanel contenedor;
+    private final CardLayout cardLayout;
+    
+    public JFramePrincipal() {
+		super("Zombies");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(900, 700);
+        setLocationRelativeTo(null);
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JFramePrincipal frame = new JFramePrincipal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+        cardLayout = new CardLayout();
+        contenedor = new JPanel(cardLayout);
+        setContentPane(contenedor);       
 	}
+	
+    public void showPanel(IPanel panel) {
+        this.getContentPane().removeAll();
+        this.getContentPane().add((Component) panel);
+        this.revalidate();
+        this.repaint();
+    }
 
-	/**
-	 * Create the frame.
-	 */
-	public JFramePrincipal() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-
-	}
-
+    public void showFrame() {
+        setVisible(true);
+    }
 }
